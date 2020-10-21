@@ -1,2 +1,2 @@
 # bookstore
-a small library app
+a small Library app.
