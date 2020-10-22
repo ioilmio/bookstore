@@ -1,0 +1,30 @@
+* {
+  padding: 0;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.bookDisplay {
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  border: 1px solid blue;
+}
+
+.bookDisplay div {
+  padding: 1rem;
+  border: 1px solid red;
+}
+
+#form-wrapper {
+  border: 1px solid violet;
+  display: none;
+}
