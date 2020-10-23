@@ -24,36 +24,7 @@
 //     status: true,
 //   },
 // ];
-function displayBook() {
-  const section = document.querySelector('#bookDisplay');
 
-  //let bookLibrary = Object.values(localStorage);
-  let bookLibrary = JSON.parse(localStorage.getItem('library'));
-
-  bookLibrary.forEach(book => {
-    const card = document.createElement('div');
-    const author = document.createElement('h3');
-    author.textContent = book.author;
-    const bookTitle = document.createElement('h2');
-    bookTitle.textContent = book.title;
-    const pages = document.createElement('h5');
-    pages.textContent = book.pages;
-    const status = document.createElement('button');
-    status.textContent = book.status;
-    const deleteBook = document.createElement('button');
-    deleteBook.textContent = 'delete book';
-    section.appendChild(card);
-    card.appendChild(author);
-    card.appendChild(bookTitle);
-    card.appendChild(pages);
-    card.appendChild(status);
-    card.appendChild(deleteBook);
-    deleteBook.onclick = () => {
-      deleteBook.parentNode.remove();
-      localStorage.removeItem(bookLibrary[bookLibrary.indexOf(book)]);
-    }
-  });
-}
 
 // function delete(node) {
 //   //deleteBook.node.remove;
@@ -83,12 +54,12 @@ function addBookToLibrary(event) {
   let status = document.getElementById("status").value;
 
 
-  console.log(form.elements[0].value);
-  console.log(form.elements[1].value);
-  console.log(form.elements[2].value);
-  console.log(form.elements[3].value);
+  // console.log(form.elements[0].value);
+  // console.log(form.elements[1].value);
+  // console.log(form.elements[2].value);
+  // console.log(form.elements[3].value);
   // localLibrary = localStorage.getItem('library');
-  if(!JSON.parse(localStorage.getItem('library'))) {
+  if (!JSON.parse(localStorage.getItem('library'))) {
     let localBooks = [];
     let book = new Book(author, title, pages, status);
     localBooks.push(book);
@@ -96,14 +67,14 @@ function addBookToLibrary(event) {
     localStorage.setItem('library', JSON.stringify(localBooks));
     displayBook();
   } else {
-      //let localBooks = Object.values(localStorage);
-      let localBooks = JSON.parse(localStorage.getItem('library'));
-      //console.log(localLibrary);
-      let book = new Book(author, title, pages, status);
-      localBooks.push(book);
-      //localStorage.setItem('library', localBooks);
-      localStorage.setItem('library', JSON.stringify(localBooks));
-      displayBook();
+    //let localBooks = Object.values(localStorage);
+    let localBooks = JSON.parse(localStorage.getItem('library'));
+    //console.log(localLibrary);
+    let book = new Book(author, title, pages, status);
+    localBooks.push(book);
+    //localStorage.setItem('library', localBooks);
+    localStorage.setItem('library', JSON.stringify(localBooks));
+    // displayBook();
   }
 
   // console.log(form.elements[0].value);
@@ -118,7 +89,72 @@ form.addEventListener('submit', addBookToLibrary);
 
 window.addEventListener("load", displayBook);
 
-window.onstorage = displayBook();
+// window.onstorage = displayBook();
 
-// remove book object from local storage after delete.
-// show page on load
+
+
+// // remove book object from local storage after delete.
+// // // show page on load
+
+window.addEventListener('storage', () => {
+  const section = document.querySelector('#bookDisplay');
+
+
+  let bookLibrary = JSON.parse(localStorage.getItem('library'));
+  let book = bookLibrary[0];
+  console.log(book);
+  const card = document.createElement('div');
+  const author = document.createElement('h3');
+  author.textContent = book.author;
+  const bookTitle = document.createElement('h2');
+  bookTitle.textContent = book.title;
+  const pages = document.createElement('h5');
+  pages.textContent = book.pages;
+  const status = document.createElement('button');
+  status.textContent = book.status;
+  const deleteBook = document.createElement('button');
+  deleteBook.textContent = 'delete book';
+  section.appendChild(card);
+  card.appendChild(author);
+  card.appendChild(bookTitle);
+  card.appendChild(pages);
+  card.appendChild(status);
+  card.appendChild(deleteBook);
+  deleteBook.onclick = () => {
+    deleteBook.parentNode.remove();
+  }
+  // localStorage.removeItem(bookLibrary[bookLibrary.indexOf(book)]);
+  // When local storage changes, dump the list to // the console. 
+  // console.log(JSON.parse(window.localStorage.getItem('library')));
+});
+
+function displayBook(book) {
+  const section = document.querySelector('#bookDisplay');
+
+  //let bookLibrary = Object.values(localStorage);
+  let bookLibrary = JSON.parse(localStorage.getItem('library'));
+
+  bookLibrary.forEach(book => {
+    const card = document.createElement('div');
+    const author = document.createElement('h3');
+    author.textContent = book.author;
+    const bookTitle = document.createElement('h2');
+    bookTitle.textContent = book.title;
+    const pages = document.createElement('h5');
+    pages.textContent = book.pages;
+    const status = document.createElement('button');
+    status.textContent = book.status;
+    const deleteBook = document.createElement('button');
+    deleteBook.textContent = 'delete book';
+    section.appendChild(card);
+    card.appendChild(author);
+    card.appendChild(bookTitle);
+    card.appendChild(pages);
+    card.appendChild(status);
+    card.appendChild(deleteBook);
+    deleteBook.onclick = () => {
+      deleteBook.parentNode.remove();
+      localStorage.removeItem(bookLibrary[bookLibrary.indexOf(book)]);
+    }
+  });
+}
