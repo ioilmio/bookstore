@@ -37,6 +37,8 @@ function Book(author, title, pages, status) {
   this.status = status;
 }
 
+
+
 const newBookBtn = document.getElementById('newBookBtn');
 
 const formWrapper = document.getElementById('form-wrapper');
@@ -65,7 +67,8 @@ function addBookToLibrary(event) {
     localBooks.push(book);
     //localStorage.setItem('library', localBooks);
     localStorage.setItem('library', JSON.stringify(localBooks));
-    displayBook();
+    // displayBook();
+    showBook(book);
   } else {
     //let localBooks = Object.values(localStorage);
     let localBooks = JSON.parse(localStorage.getItem('library'));
@@ -74,6 +77,7 @@ function addBookToLibrary(event) {
     localBooks.push(book);
     //localStorage.setItem('library', localBooks);
     localStorage.setItem('library', JSON.stringify(localBooks));
+    showBook(book);
     // displayBook();
   }
 
@@ -87,21 +91,22 @@ function addBookToLibrary(event) {
 const form = document.getElementById('form');
 form.addEventListener('submit', addBookToLibrary);
 
-window.addEventListener("load", displayBook);
+window.addEventListener("load", displayLibrary);
 
 // window.onstorage = displayBook();
 
 
 
 // // remove book object from local storage after delete.
-// // // show page on load
 
-window.addEventListener('storage', () => {
+// window.addEventListener('storage', () => {
+function displayBook(book) {
+
   const section = document.querySelector('#bookDisplay');
 
 
-  let bookLibrary = JSON.parse(localStorage.getItem('library'));
-  let book = bookLibrary[0];
+  // let bookLibrary = JSON.parse(localStorage.getItem('library'));
+  // let book = bookLibrary[bookLibrary.length - 1]; //bookLibrary will be null at the start
   console.log(book);
   const card = document.createElement('div');
   const author = document.createElement('h3');
@@ -124,17 +129,18 @@ window.addEventListener('storage', () => {
     deleteBook.parentNode.remove();
   }
   // localStorage.removeItem(bookLibrary[bookLibrary.indexOf(book)]);
-  // When local storage changes, dump the list to // the console. 
+  // When local storage changes, dump the list to // the console.
   // console.log(JSON.parse(window.localStorage.getItem('library')));
-});
+  // });
+}
 
-function displayBook(book) {
+function displayLibrary() {
   const section = document.querySelector('#bookDisplay');
 
   //let bookLibrary = Object.values(localStorage);
   let bookLibrary = JSON.parse(localStorage.getItem('library'));
 
-  bookLibrary.forEach(book => {
+  bookLibrary.forEach(book => { //bookLibrary will be null at the start
     const card = document.createElement('div');
     const author = document.createElement('h3');
     author.textContent = book.author;
@@ -154,7 +160,7 @@ function displayBook(book) {
     card.appendChild(deleteBook);
     deleteBook.onclick = () => {
       deleteBook.parentNode.remove();
-      localStorage.removeItem(bookLibrary[bookLibrary.indexOf(book)]);
+      // localStorage.removeItem(bookLibrary[bookLibrary.indexOf(book)]);
     }
   });
 }
