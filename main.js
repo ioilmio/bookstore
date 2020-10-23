@@ -61,8 +61,7 @@ function showBook(book) {
   const section = document.querySelector('#bookDisplay');
 
   let bookLibrary = JSON.parse(localStorage.getItem('library'));
-  let newBook = bookLibrary.find(element => element === book); //bookLibrary will be null at the start
-  // console.log(book);
+  let newBook = bookLibrary.find(element => element === book);
 
   const card = document.createElement('div');
   const author = document.createElement('h3');
@@ -93,6 +92,9 @@ function showBook(book) {
 
   deleteBook.onclick = () => {
     deleteBook.parentNode.remove();
+    let bookIndex = bookLibrary.indexOf(newBook);
+    bookLibrary.splice(bookIndex, 1);
+    localStorage.setItem('library', JSON.stringify(bookLibrary));
   }
   // localStorage.removeItem(bookLibrary[bookLibrary.indexOf(book)]);
   // When local storage changes, dump the list to // the console.
@@ -136,6 +138,9 @@ function displayLibrary() {
 
       deleteBook.onclick = () => {
         deleteBook.parentNode.remove();
+        let bookIndex = bookLibrary.indexOf(book);
+        bookLibrary.splice(bookIndex, 1);
+        localStorage.setItem('library', JSON.stringify(bookLibrary));
         // localStorage.removeItem(bookLibrary[bookLibrary.indexOf(book)]);
       }
     });
