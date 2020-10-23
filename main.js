@@ -1,35 +1,3 @@
-// function initLibrary() {
-
-//   localStorage.setItem('library', localLibrary);
-// }
-
-
-// const library = [
-//   {
-//     author: 'uncle bob',
-//     title: 'clean code',
-//     pages: 400,
-//     status: false,
-//   },
-//   {
-//     author: 'uncle james',
-//     title: 'clean code 2',
-//     pages: 500,
-//     status: true,
-//   },
-//   {
-//     author: 'uncle dad',
-//     title: 'clean code 3',
-//     pages: 600,
-//     status: true,
-//   },
-// ];
-
-
-// function delete(node) {
-//   //deleteBook.node.remove;
-// }
-
 function Book(author, title, pages, status) {
   this.author = author;
   this.title = title;
@@ -37,7 +5,10 @@ function Book(author, title, pages, status) {
   this.status = status;
 }
 
-
+Book.prototype.toggleStatus = function() {
+  // (this.status === 'read') ? this.status = 'unread' : this.status = 'read';
+  console.log('toggleStatus');
+}
 
 const newBookBtn = document.getElementById('newBookBtn');
 
@@ -55,36 +26,22 @@ function addBookToLibrary(event) {
   let pages = document.getElementById("pages").value;
   let status = document.getElementById("status").value;
 
-
-  // console.log(form.elements[0].value);
-  // console.log(form.elements[1].value);
-  // console.log(form.elements[2].value);
-  // console.log(form.elements[3].value);
-  // localLibrary = localStorage.getItem('library');
   if (!JSON.parse(localStorage.getItem('library'))) {
     let localBooks = [];
     let book = new Book(author, title, pages, status);
     localBooks.push(book);
-    //localStorage.setItem('library', localBooks);
     localStorage.setItem('library', JSON.stringify(localBooks));
-    // displayBook();
     showBook(book);
+    // displayBook();
   } else {
-    //let localBooks = Object.values(localStorage);
     let localBooks = JSON.parse(localStorage.getItem('library'));
-    //console.log(localLibrary);
     let book = new Book(author, title, pages, status);
     localBooks.push(book);
-    //localStorage.setItem('library', localBooks);
     localStorage.setItem('library', JSON.stringify(localBooks));
     showBook(book);
     // displayBook();
   }
 
-  // console.log(form.elements[0].value);
-  // console.log(form.elements[1].value);
-  // console.log(form.elements[2].value);
-  // console.log(form.elements[3].value);
   event.preventDefault();
 }
 
@@ -95,19 +52,18 @@ window.addEventListener("load", displayLibrary);
 
 // window.onstorage = displayBook();
 
-
-
 // // remove book object from local storage after delete.
 
 // window.addEventListener('storage', () => {
-function displayBook(book) {
+
+function showBook(book) {
 
   const section = document.querySelector('#bookDisplay');
 
-
-  // let bookLibrary = JSON.parse(localStorage.getItem('library'));
+  let bookLibrary = JSON.parse(localStorage.getItem('library'));
   // let book = bookLibrary[bookLibrary.length - 1]; //bookLibrary will be null at the start
-  console.log(book);
+  // console.log(book);
+
   const card = document.createElement('div');
   const author = document.createElement('h3');
   author.textContent = book.author;
@@ -125,6 +81,27 @@ function displayBook(book) {
   card.appendChild(pages);
   card.appendChild(status);
   card.appendChild(deleteBook);
+
+  // status.onclick = () => { book.toggleStatus };
+
+  status.onclick = () => {
+    if(book.status === 'read') {
+      let index = bookLibrary.indexOf(book);
+      book.status = 'unread';
+      bookLibrary[index] = book;
+      localStorage.setItem('library', JSON.stringify(bookLibrary));
+      status.textContent = book.status;
+      console.log(book.status);
+    } else {
+      let index = bookLibrary.indexOf(book);
+      book.status = 'read';
+      bookLibrary[index] = book;
+      localStorage.setItem('library', JSON.stringify(bookLibrary));
+      status.textContent = book.status;
+      console.log(book.status);
+    }
+  }
+
   deleteBook.onclick = () => {
     deleteBook.parentNode.remove();
   }
@@ -137,7 +114,6 @@ function displayBook(book) {
 function displayLibrary() {
   const section = document.querySelector('#bookDisplay');
 
-  //let bookLibrary = Object.values(localStorage);
   let bookLibrary = JSON.parse(localStorage.getItem('library'));
 
   bookLibrary.forEach(book => { //bookLibrary will be null at the start
@@ -158,6 +134,22 @@ function displayLibrary() {
     card.appendChild(pages);
     card.appendChild(status);
     card.appendChild(deleteBook);
+
+    // status.onclick = () => { book.toggleStatus };
+
+    status.onclick = () => {
+      if(book.status === 'read') {
+        book.status = 'unread';
+        localStorage.setItem('library', JSON.stringify(bookLibrary));
+        status.textContent = book.status;
+      } else {
+        book.status = 'read';
+        localStorage.setItem('library', JSON.stringify(bookLibrary));
+        status.textContent = book.status;
+      }
+    }
+
+
     deleteBook.onclick = () => {
       deleteBook.parentNode.remove();
       // localStorage.removeItem(bookLibrary[bookLibrary.indexOf(book)]);
