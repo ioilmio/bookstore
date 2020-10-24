@@ -5,144 +5,110 @@ function Book(author, title, pages, status) {
   this.status = status;
 }
 
-// Book.prototype.toggleStatus = function() {
-//   // (this.status === 'read') ? this.status = 'unread' : this.status = 'read';
-//   console.log('toggleStatus');
+// function toggleStatus(book, bookLibrary) {
+//   book.status === 'read' ? book.status = 'unread' : book.status = 'read';
+//   localStorage.setItem('library', JSON.stringify(bookLibrary));
+//   status.textContent = book.status;
 // }
 
-const bookBtn = document.getElementById('bookBtn');
+// function deleteBook(book, deleteBookBtn, bookLibrary) {
+//   deleteBookBtn.parentNode.remove();
+//   let bookIndex = bookLibrary.indexOf(book);
+//   bookLibrary.splice(bookIndex, 1);
+//   localStorage.setItem('library', JSON.stringify(bookLibrary));
+// }
+
+const bookBtn = document.getElementById('bookBtn'); //suspicious, should it be newBookBtn id?
 
 const formWrapper = document.getElementById('form-wrapper');
 
-function displayForm(elem) {
-  elem.style.display === 'block' ? elem.style.display = 'none' : elem.style.display = 'block';
+function displayForm(form) {
+  form.style.display === 'block' ? form.style.display = 'none' : form.style.display = 'block';
 }
 
 newBookBtn.onclick = () => displayForm(formWrapper);
 
 function addBookToLibrary(event) {
-  let author = form.elements[0].value;
-  let title = document.querySelector("#title").value;
-  let pages = document.getElementById("pages").value;
-  let status = document.getElementById("status").value;
+  let author = document.getElementById('author').value;
+  let title = document.querySelector('#title').value;
+  let pages = document.getElementById('pages').value;
+  let status = document.getElementById('status').value;
 
   if (!JSON.parse(localStorage.getItem('library'))) {
     let localBooks = [];
     let book = new Book(author, title, pages, status);
     localBooks.push(book);
     localStorage.setItem('library', JSON.stringify(localBooks));
-    showBook(book);
-    // displayBook();
+    loadNewBook(book);
   } else {
     let localBooks = JSON.parse(localStorage.getItem('library'));
     let book = new Book(author, title, pages, status);
     localBooks.push(book);
     localStorage.setItem('library', JSON.stringify(localBooks));
-    showBook(book);
-    // displayBook();
+    loadNewBook(book);
   }
-
   event.preventDefault();
 }
 
 const form = document.getElementById('form');
+
 form.addEventListener('submit', addBookToLibrary);
 
-window.addEventListener("load", displayLibrary);
+const section = document.querySelector('#bookDisplay');
 
-// window.onstorage = displayBook();
-
-// // remove book object from local storage after delete.
-
-// window.addEventListener('storage', () => {
-
-function showBook(book) {
-
-  const section = document.querySelector('#bookDisplay');
-
-  let bookLibrary = JSON.parse(localStorage.getItem('library'));
-  let newBook = bookLibrary.find(element => element === book);
-
+function displayBook(book, bookLibrary) {
   const card = document.createElement('div');
   const author = document.createElement('h3');
-  author.textContent = newBook.author;
+  author.textContent = book.author;
   const bookTitle = document.createElement('h2');
-  bookTitle.textContent = newBook.title;
+  bookTitle.textContent = book.title;
   const pages = document.createElement('h5');
-  pages.textContent = newBook.pages;
+  pages.textContent = book.pages;
   const status = document.createElement('button');
-  status.textContent = newBook.status;
-  const deleteBook = document.createElement('button');
-  deleteBook.textContent = 'delete book';
+  status.textContent = book.status;
+  const deleteBookBtn = document.createElement('button');
+  deleteBookBtn.textContent = 'delete book';
   section.appendChild(card);
   card.appendChild(author);
   card.appendChild(bookTitle);
   card.appendChild(pages);
   card.appendChild(status);
-  card.appendChild(deleteBook);
+  card.appendChild(deleteBookBtn);
 
-  // status.onclick = () => { book.toggleStatus };
+  // status.onclick = toggleStatus(book, bookLibrary);
 
   status.onclick = () => {
-    newBook.status === 'read' ? newBook.status = 'unread' : newBook.status = 'read';
+    book.status === 'read' ? book.status = 'unread' : book.status = 'read';
     localStorage.setItem('library', JSON.stringify(bookLibrary));
-    status.textContent = newBook.status;
-
+    status.textContent = book.status;
   }
 
-  deleteBook.onclick = () => {
-    deleteBook.parentNode.remove();
-    let bookIndex = bookLibrary.indexOf(newBook);
+  // deleteBookBtn.onclick = deleteBook(book, deleteBookBtn, bookLibrary);
+
+  deleteBookBtn.onclick = () => {
+    deleteBookBtn.parentNode.remove();
+    let bookIndex = bookLibrary.indexOf(book);
     bookLibrary.splice(bookIndex, 1);
     localStorage.setItem('library', JSON.stringify(bookLibrary));
   }
-  // localStorage.removeItem(bookLibrary[bookLibrary.indexOf(book)]);
-  // When local storage changes, dump the list to // the console.
-  // console.log(JSON.parse(window.localStorage.getItem('library')));
-  // });
 }
 
-function displayLibrary() {
-  const section = document.querySelector('#bookDisplay');
-
+function loadNewBook(book) {
   let bookLibrary = JSON.parse(localStorage.getItem('library'));
 
-  if (bookLibrary !== null) {
+  let newBook = bookLibrary.find(element => element === book);
+
+  displayBook(newBook, bookLibrary);
+}
+
+function loadLibrary() {
+  let bookLibrary = JSON.parse(localStorage.getItem('library'));
+
+  if (bookLibrary) {
     bookLibrary.forEach(book => {
-      const card = document.createElement('div');
-      const author = document.createElement('h3');
-      author.textContent = book.author;
-      const bookTitle = document.createElement('h2');
-      bookTitle.textContent = book.title;
-      const pages = document.createElement('h5');
-      pages.textContent = book.pages;
-      const status = document.createElement('button');
-      status.textContent = book.status;
-      const deleteBook = document.createElement('button');
-      deleteBook.textContent = 'delete book';
-      section.appendChild(card);
-      card.appendChild(author);
-      card.appendChild(bookTitle);
-      card.appendChild(pages);
-      card.appendChild(status);
-      card.appendChild(deleteBook);
-
-      // status.onclick = () => { book.toggleStatus };
-
-      status.onclick = () => {
-        book.status === 'read' ? book.status = 'unread' : book.status = 'read';
-        localStorage.setItem('library', JSON.stringify(bookLibrary));
-        status.textContent = book.status;
-      }
-
-
-      deleteBook.onclick = () => {
-        deleteBook.parentNode.remove();
-        let bookIndex = bookLibrary.indexOf(book);
-        bookLibrary.splice(bookIndex, 1);
-        localStorage.setItem('library', JSON.stringify(bookLibrary));
-        // localStorage.removeItem(bookLibrary[bookLibrary.indexOf(book)]);
-      }
+      displayBook(book, bookLibrary);
     });
   }
 }
+
+window.addEventListener("load", loadLibrary);
