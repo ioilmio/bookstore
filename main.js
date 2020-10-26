@@ -32,7 +32,7 @@ function addBookToLibrary(event) {
   let author = document.getElementById('author').value;
   let title = document.querySelector('#title').value;
   let pages = document.getElementById('pages').value;
-  let status = document.getElementById('status').value;
+  let status = document.querySelector('input[name="status"]:checked').value
 
   if (!JSON.parse(localStorage.getItem('library'))) {
     let localBooks = [];
