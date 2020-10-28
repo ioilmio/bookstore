@@ -51,6 +51,7 @@ function deleteBtn(deleteBookBtn, bookLibrary, book) {
 function displayBook(book, bookLibrary) {
   const section = document.querySelector('#bookDisplay');
   const card = document.createElement('div');
+
   section.appendChild(card);
 
   card.appendChild(author(book));
@@ -89,26 +90,31 @@ function loadNewBook(book) {
 newBookBtn.onclick = () => displayForm(formWrapper);
 
 function addBookToLibrary(event) {
-  const author = document.getElementById('author').value;
-  const title = document.querySelector('#title').value;
-  const pages = document.getElementById('pages').value;
-  const status = document.querySelector('input[name="status"]:checked').value;
+  function bookValue() {
+    const author = document.getElementById('author').value;
+    const title = document.querySelector('#title').value;
+    const pages = document.getElementById('pages').value;
+    const status = document.querySelector('input[name="status"]:checked').value;
+    return {
+      author, title, pages, status,
+    };
+  }
 
+  const { author, title, pages, status } = bookValue();
 
-  
+  function pushAndLoad(localBooks) {
+    const book = bookFactory(author, title, pages, status);
+    localBooks.push(book);
+    localStorage.setItem('library', JSON.stringify(localBooks));
+    loadNewBook(book);
+  }
 
   if (!JSON.parse(localStorage.getItem('library'))) {
     const localBooks = [];
-    const book = bookFactory(author, title, pages, status);
-    localBooks.push(book);
-    localStorage.setItem('library', JSON.stringify(localBooks));
-    loadNewBook(book);
+    pushAndLoad(localBooks);
   } else {
     const localBooks = JSON.parse(localStorage.getItem('library'));
-    const book = bookFactory(author, title, pages, status);
-    localBooks.push(book);
-    localStorage.setItem('library', JSON.stringify(localBooks));
-    loadNewBook(book);
+    pushAndLoad(localBooks);
   }
   event.preventDefault();
 }
