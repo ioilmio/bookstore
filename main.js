@@ -38,6 +38,15 @@ const bookStatus = (status, book, bookLibrary) => {
   };
 };
 
+function deleteBtn(deleteBookBtn, bookLibrary, book) {
+  deleteBookBtn.onclick = () => {
+    deleteBookBtn.parentNode.remove();
+    const bookIndex = bookLibrary.indexOf(book);
+    bookLibrary.splice(bookIndex, 1);
+    localStorage.setItem('library', JSON.stringify(bookLibrary));
+  };
+}
+
 
 function displayBook(book, bookLibrary) {
   const section = document.querySelector('#bookDisplay');
@@ -59,13 +68,10 @@ function displayBook(book, bookLibrary) {
   bookStatus(status, book, bookLibrary);
 
 
-  deleteBookBtn.onclick = () => {
-    deleteBookBtn.parentNode.remove();
-    const bookIndex = bookLibrary.indexOf(book);
-    bookLibrary.splice(bookIndex, 1);
-    localStorage.setItem('library', JSON.stringify(bookLibrary));
-  };
+  deleteBtn(deleteBookBtn, bookLibrary, book);
 }
+
+
 
 
 function loadNewBook(book) {
