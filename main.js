@@ -57,21 +57,27 @@ function displayBook(book, bookLibrary) {
   card.appendChild(title(book));
   card.appendChild(page(book));
 
-  const status = document.createElement('button');
-  status.textContent = book.status;
+
+  function statusBtn() {
+    const status = document.createElement('button');
+    status.textContent = book.status;
+    return status;
+  }
+
+  const status = statusBtn();
   card.appendChild(status);
-
-  const deleteBookBtn = document.createElement('button');
-  deleteBookBtn.textContent = 'delete book';
-  card.appendChild(deleteBookBtn);
-
   bookStatus(status, book, bookLibrary);
 
+  function deleteBook() {
+    const deleteBookBtn = document.createElement('button');
+    deleteBookBtn.textContent = 'delete book';
+    return deleteBookBtn;
+  }
 
+  const deleteBookBtn = deleteBook();
+  card.appendChild(deleteBookBtn);
   deleteBtn(deleteBookBtn, bookLibrary, book);
 }
-
-
 
 
 function loadNewBook(book) {
@@ -87,6 +93,9 @@ function addBookToLibrary(event) {
   const title = document.querySelector('#title').value;
   const pages = document.getElementById('pages').value;
   const status = document.querySelector('input[name="status"]:checked').value;
+
+
+  
 
   if (!JSON.parse(localStorage.getItem('library'))) {
     const localBooks = [];
