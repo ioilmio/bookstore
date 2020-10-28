@@ -100,7 +100,9 @@ function addBookToLibrary(event) {
     };
   }
 
-  const { author, title, pages, status } = bookValue();
+  const {
+    author, title, pages, status,
+  } = bookValue();
 
   function pushAndLoad(localBooks) {
     const book = bookFactory(author, title, pages, status);
