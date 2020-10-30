@@ -5,7 +5,7 @@ class Book {
     this.pages = pages;
     this.status = status;
   }
-};
+}
 
 const newBookBtn = document.getElementById('newBookBtn');
 
