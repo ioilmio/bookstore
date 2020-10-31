@@ -120,7 +120,7 @@ function addBooks(e) {
 
 const form = document.getElementById('form');
 
-form.addEventListener('submit', () => addBooks);
+form.addEventListener('submit', addBooks);
 
 // Toggle status
 
@@ -130,10 +130,10 @@ form.addEventListener('submit', () => addBooks);
 //   return changeStatus;
 // };
 
-document.querySelector('#bookDisplay').addEventListener('click', (e) => {
-  e.target.textContent = 'read' ? e.target.textContent = 'unread' : e.target.textContent = 'read';
-});
+// document.querySelector('#bookDisplay').addEventListener('click', (e) => {
+//   e.target.textContent = 'read' ? e.target.textContent = 'unread' : e.target.textContent = 'read';
+// });
 
-document.querySelector('#bookDisplay').addEventListener('click', (e) => {
-  UI.removeBook(e.target);
-});
+// document.querySelector('#bookDisplay').addEventListener('click', (e) => {
+//   UI.removeBook(e.target);
+// });
