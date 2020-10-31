@@ -134,6 +134,6 @@ form.addEventListener('submit', addBooks);
 //   e.target.textContent = 'read' ? e.target.textContent = 'unread' : e.target.textContent = 'read';
 // });
 
-// document.querySelector('#bookDisplay').addEventListener('click', (e) => {
-//   UI.removeBook(e.target);
-// });
+document.querySelector('#bookDisplay').addEventListener('click', (e) => {
+  UI.removeBook(e.target);
+});
