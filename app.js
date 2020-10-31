@@ -146,12 +146,6 @@ form.addEventListener('submit', addBooks);
 
 // Toggle status
 
-// const bookStatus = (status, book) => {
-//   const changeStatus = book.status === 'read' ? book.status = 'unread' : book.status = 'read';
-//   status.textContent = book.status;
-//   return changeStatus;
-// };
-
 document.querySelector('#bookDisplay').addEventListener('click', (e) => {
     console.log(e.target.textContent);
     e.target.textContent = 'read' ? e.target.textContent = 'unread' : e.target.textContent = 'read' ;
@@ -161,6 +155,8 @@ document.querySelector('#bookDisplay').addEventListener('click', (e) => {
     console.log(e.target.textContent);
     e.target.textContent = 'unread'?  e.target.textContent = 'read' : e.target.textContent = 'unread';
 });
+
+// Remove book
 
 document.querySelector('#bookDisplay').addEventListener('click', (e) => {
     UI.removeBook(e.target);
