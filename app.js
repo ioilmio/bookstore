@@ -146,6 +146,7 @@ form.addEventListener('submit', addBooks);
 
 // Toggle status
 
+
 document.querySelector('#bookDisplay').addEventListener('click', (e) => {
     console.log(e.target.textContent);
     e.target.textContent = 'read' ? e.target.textContent = 'unread' : e.target.textContent = 'read' ;
