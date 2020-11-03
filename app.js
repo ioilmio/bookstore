@@ -150,11 +150,10 @@ form.addEventListener('submit', addBooks);
 
 
 document.querySelector('#bookDisplay').addEventListener('click', (e) => {
-//     console.log(e.target.parentNode);
-  e.target.parentNode.lastChild.previousSibling.textContent = (e.target.parentNode.lastChild.previousSibling.textContent === 'read')
+  e.target.parentNode.lastChild.previousSibling.textContent = (
+    e.target.parentNode.lastChild.previousSibling.textContent === 'read')
     ? e.target.parentNode.lastChild.previousSibling.textContent = 'unread'
     : e.target.parentNode.lastChild.previousSibling.textContent = 'read';
-//     Storage.toggleStatus(e.target.parentNode.lastChild.previousSibling)
 });
 
 // Remove book
@@ -167,9 +166,6 @@ document.querySelector('#bookDisplay').addEventListener('click', (e) => {
 });
 
 document.querySelector('#bookDisplay').addEventListener('click', (e) => {
-// console.log(e.target.parentNode.firstChild.textContent);
-// console.log(e.target.previousSibling.previousSibling.textContent);
-// console.log(e.target.previousSibling.previousSibling.previousSibling.textContent);
   Storage.toggleStatus(e.target.parentNode.firstChild.textContent,
     e.target.previousSibling.previousSibling.textContent,
     e.target.previousSibling.previousSibling.previousSibling.textContent);
