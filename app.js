@@ -150,23 +150,32 @@ form.addEventListener('submit', addBooks);
 
 
 document.querySelector('#bookDisplay').addEventListener('click', (e) => {
-  e.target.parentNode.lastChild.previousSibling.textContent = (
-    e.target.parentNode.lastChild.previousSibling.textContent === 'read')
-    ? e.target.parentNode.lastChild.previousSibling.textContent = 'unread'
-    : e.target.parentNode.lastChild.previousSibling.textContent = 'read';
+  if(e.target.classList.contains('toggleStatusBtn')){
+    e.target.textContent = (
+      e.target.textContent === 'read')
+      ? e.target.textContent = 'unread'
+      : e.target.textContent = 'read';
+    }
 });
 
 // Remove book
 
 document.querySelector('#bookDisplay').addEventListener('click', (e) => {
+
+  if(e.target.classList.contains('delete')){
   UI.removeBook(e.target);
+
   Storage.removeBook(e.target.parentNode.firstChild.textContent,
     e.target.previousSibling.previousSibling.textContent,
     e.target.previousSibling.previousSibling.previousSibling.textContent);
+  }
 });
 
 document.querySelector('#bookDisplay').addEventListener('click', (e) => {
-  Storage.toggleStatus(e.target.parentNode.firstChild.textContent,
-    e.target.previousSibling.previousSibling.textContent,
-    e.target.previousSibling.previousSibling.previousSibling.textContent);
+  if(e.target.classList.contains('toggleStatusBtn')){
+
+    Storage.toggleStatus(e.target.parentNode.firstChild.textContent,
+      e.target.previousSibling.previousSibling.textContent,
+      e.target.previousSibling.previousSibling.previousSibling.textContent);
+    }
 });
