@@ -1,6 +1,11 @@
-const bookFactory = (author, title, pages, status) => ({
-  author, title, pages, status,
-});
+class Book {
+  constructor(author, title, pages, status) {
+    this.author = author;
+    this.title = title;
+    this.pages = pages;
+    this.status = status;
+  }
+}
 
 const newBookBtn = document.getElementById('newBookBtn');
 
@@ -105,7 +110,7 @@ function addBookToLibrary(event) {
   } = bookValue();
 
   function pushAndLoad(localBooks) {
-    const book = bookFactory(author, title, pages, status);
+    const book = new Book(author, title, pages, status);
     localBooks.push(book);
     localStorage.setItem('library', JSON.stringify(localBooks));
     loadNewBook(book);
